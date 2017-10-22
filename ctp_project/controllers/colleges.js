@@ -4,12 +4,12 @@ const router = express.Router();
 
 //gets all colleges
 router.get('/', (req, res) => {
-  models.College.findAll()
+  models.Colleges.findAll()
   .then((data) => {
     res.send(data)
   })
   .catch((err) => {
-      console.log('ERROR while getting findAll Colleges');
+      console.log('Failure GET to '/' route (displaying all colleges');
       res.redirect('/error');
     })
 });
@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 
 //makes a college
 router.post('/', (req, res) => {
-  models.College.create({
+  models.Colleges.create({
       name: req.body.name,
       address: req.body.address,
       phoneNumber: req.body.phoneNumber,
@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
       res.send(college);
     })
     .catch((err) => {
-      console.log('ERROR while creating a new College');
+      console.log('Failure POST to '/' route (creating a college');
       res.send('/error');
     })
 });
@@ -37,57 +37,53 @@ router.post('/', (req, res) => {
 
 //gets a college
 router.get('/:id', (req, res) => {
-  models.College.findOne({
-    where: {id: req.params.id}
-  })
+  models.Colleges.findById(parseInt(req.params.id))
   .then((collegeInfo) => { 
-    res.send(collegeInfo);
+    res.send(college);
   })
   .catch((err) => {
-      console.log('ERROR while getting a College information');
+      console.log('Failure GET '/' route (displaying a single college');
       res.redirect('/error');
     })
 });
 
-
-
-//updates a colleges FLAG
+//updates a colleges
 router.put('/:id', (req, res) => {
-  models.College.findOne({
-    where: {id: req.params.id}
-  })
+  models.Colleges.findById(parseInt(req.params.id))
   .then((collegeInfo) => {
     collegeInfo.update({
-    name: req.body.name,
-    address: req.body.address,
-    phoneNumber: req.body.phoneNumber,
-    state: req.body.state,
-    collegeDirector: req.body.collegeDirector,
-    website: req.body.website,
-   })
-  })
-  .then(() => { 
-    res.json();
+      name: req.body.name,
+      address: req.body.address,
+      phoneNumber: req.body.phoneNumber,
+      state: req.body.state,
+      collegeDirector: req.body.collegeDirector,
+      website: req.body.website,
+    })
+    res.sendStatus(200);
   })
   .catch((err) => {
-      console.log('ERROR while getting a College information');
+      console.log('Failure PUT '/' route (updating a college');
       res.redirect('/error');
-    })
+  })
 });
-
 
 //deletes a college
 router.delete('/:id', (req, res) => {
-  models.College.findOne({
-    where: {id: req.params.id}
+  models.Colleges.findById(parseInt(req.params.id))
+  .then((college) => {
+    college.destroy();
+    res.sendStatus(200);
   })
-  .then((id)=>{res.send(id.name + ' has been deleted!')})
+  .catch((err) => {
+      console.log('Failure DELETE '/' route (deleting a college');
+      res.redirect('/error');
+  })
 });
 
-
+/*
 //SEARCH :name = is any key I defined,use to access the req. 
 router.get('/search/:name', (req, res) => {
-  models.College.findAll({
+  models.Colleges.findAll({
    where: {
      name: {
        $like: '%' + req.params.name + '%'
@@ -102,8 +98,6 @@ router.get('/search/:name', (req, res) => {
       res.redirect('/error');
     })
 });
-
-
-
+*/
 
 module.exports = router;
