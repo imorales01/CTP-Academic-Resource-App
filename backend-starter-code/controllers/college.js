@@ -2,11 +2,19 @@ const express = require('express')
 const models = require('../models')
 const router = express.Router()
 
+
+router.get('/test', (req, res) => {
+  res.json({
+    'msg': 'hey there Angie',
+  });
+})
+
 //  gets all colleges
 router.get('/', (req, res) => {
+  
   models.College.findAll()
     .then((data) => {
-      res.send(data)
+      res.json(data)
     })
     .catch((err) => {
       console.log('ERROR while getting findAll Colleges', err)
@@ -23,11 +31,11 @@ router.post('/', (req, res) => {
     website: req.body.website
   })
     .then((college) => {
-      res.send(college)
+      res.json(college)
     })
     .catch((err) => {
       console.log('ERROR while creating a new College', err)
-      res.send('/error')
+      res.json('/error')
     })
 })
 
@@ -37,7 +45,7 @@ router.get('/:id', (req, res) => {
     where: {id: req.params.id}
   })
     .then((collegeInfo) => {
-      res.send(collegeInfo)
+      res.json(collegeInfo)
     })
     .catch((err) => {
       console.log('ERROR while getting a College information', err)
@@ -63,7 +71,7 @@ router.put('/:id', (req, res) => {
         where: {id: req.params.id}
       })
         .then((user) => {
-          res.send(user)
+          res.json(user)
         })
     })
     .catch((err) => {
@@ -78,7 +86,7 @@ router.delete('/:id', (req, res) => {
     where: {id: req.params.id}
   })
     .then((id) => {
-      res.send('Successufully deleted!')
+      res.json('Successufully deleted!')
     })
 })
 
@@ -92,7 +100,7 @@ router.get('/search/:name', (req, res) => {
     }
   })
     .then((data) => {
-      res.send(data)
+      res.json(data)
     })
     .catch((err) => {
       console.log('ERROR while getting findAll Colleges', err)
