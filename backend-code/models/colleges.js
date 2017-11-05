@@ -1,5 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const College = sequelize.define('College', {
+
+  const Colleges = sequelize.define('Colleges', {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -29,10 +30,10 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   })
-
-  College.associate = (models) => {
+  
+  Colleges.associate = (models) => {
     // uncomment for associations when Department models is ready 
     // models.College.hasMany(models.Department)
   }
-  return College
+  return Colleges
 }

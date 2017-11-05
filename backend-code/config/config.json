@@ -2,7 +2,7 @@
   "development": {
     "username": "ctp_user",
     "password": "ctp_user",
-    "database": "Academic-Resource-App",
+    "database": "academic_resource_development",
     "host": "127.0.0.1",
     "dialect": "postgresql"
   },
