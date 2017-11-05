@@ -1,20 +1,39 @@
 module.exports = (sequelize, DataTypes) => {
-  const Colleges = sequelize.define('Colleges', {
-    name: DataTypes.TEXT,
-    address: DataTypes.TEXT,
-    phoneNumber: DataTypes.TEXT,
-    state: DataTypes.TEXT,
-    collegeDirector: DataTypes.TEXT,
-    website: DataTypes.TEXT
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here one to many
-        models.Colleges.hasMany(models.Deparments)
+
+  const College = sequelize.define('College', {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: false
+      }
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    },
+    phoneNumber: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    },
+    website: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true
       }
     }
-  });
-  return Colleges;
-};
-
-
+  })
+  
+  College.associate = (models) => {
+    // uncomment for associations when Department models is ready 
+    // models.College.hasMany(models.Department)
+  }
+  return College
+}
