@@ -35,7 +35,7 @@ router.post('/', (req, res) => {
 });
 
 
-//gets a college
+//gets a college by id
 router.get('/:id', (req, res) => {
   models.Colleges.findById(parseInt(req.params.id))
   .then((collegeInfo) => { 
