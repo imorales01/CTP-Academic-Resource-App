@@ -1,13 +1,13 @@
 const express = require('express')
 const models = require('../models')
 const router = express.Router()
-const Post = require('../models/post');
+// const Post = require('../models/post');
 
 //  gets a User by userName with all user posts:http://localhost:8000/api/users/Luis123
 router.get('/:userName', (req, res) => {
   models.User.findOne({
-    where: {userName: req.params.userName},
-    include: [{model: models.Post}]
+    where: {userName: req.params.userName}
+    // include: [{model: models.Post}]
   })
   .then((data) => {
       res.json(data)
