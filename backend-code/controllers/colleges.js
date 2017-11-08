@@ -1,103 +1,105 @@
-const express = require('express');
-const models = require('../models');
-const router = express.Router();
+const express = require('express')
+const models = require('../models')
+const router = express.Router()
 
-//gets all colleges
+//  gets all colleges
+//  Path: http://localhost:8000/api/colleges
 router.get('/', (req, res) => {
   models.Colleges.findAll()
-  .then((data) => {
-    res.send(data)
-  })
-  .catch((err) => {
-      console.log('Failure GET to '/' route (displaying all colleges');
-      res.redirect('/error');
-    })
-});
-
-
-//makes a college
-router.post('/', (req, res) => {
-  models.Colleges.create({
-      name: req.body.name,
-      address: req.body.address,
-      phoneNumber: req.body.phoneNumber,
-      state: req.body.state,
-      collegeDirector: req.body.collegeDirector,
-      website: req.body.website,
-    })
-    .then((college) => {
-      res.send(college);
+    .then((data) => {
+      res.json(data)
     })
     .catch((err) => {
-      console.log('Failure POST to '/' route (creating a college');
-      res.send('/error');
+      console.log('ERROR while getting findAll Colleges', err)
+      res.redirect('/error')
     })
-});
+})
 
+//  creates a college
+router.post('/', (req, res) => {
+  models.Colleges.create({
+    name: req.body.name,
+    address: req.body.address,
+    phoneNumber: req.body.phoneNumber,
+    website: req.body.website
+  })
+    .then((college) => {
+      res.json(college)
+    })
+    .catch((err) => {
+      console.log('ERROR while creating a new College', err)
+      res.json('/error')
+    })
+})
 
-//gets a college by id
+//  gets a college by id
 router.get('/:id', (req, res) => {
-  models.Colleges.findById(parseInt(req.params.id))
-  .then((collegeInfo) => { 
-    res.send(college);
+  models.Colleges.findOne({
+    where: {id: req.params.id}
   })
-  .catch((err) => {
-      console.log('Failure GET '/' route (displaying a single college');
-      res.redirect('/error');
+    .then((collegeInfo) => {
+      res.json(collegeInfo)
     })
-});
+    .catch((err) => {
+      console.log('ERROR while getting a College information', err)
+      res.redirect('/error')
+    })
+})
 
-//updates a colleges
+//  updates a college
 router.put('/:id', (req, res) => {
-  models.Colleges.findById(parseInt(req.params.id))
-  .then((collegeInfo) => {
-    collegeInfo.update({
-      name: req.body.name,
-      address: req.body.address,
-      phoneNumber: req.body.phoneNumber,
-      state: req.body.state,
-      collegeDirector: req.body.collegeDirector,
-      website: req.body.website,
+  models.Colleges.findOne({
+    where: {id: req.params.id}
+  })
+    .then((collegeInfo) => {
+      collegeInfo.update({
+        name: req.body.name,
+        address: req.body.address,
+        phoneNumber: req.body.phoneNumber,
+        website: req.body.website
+      })
     })
-    res.sendStatus(200);
-  })
-  .catch((err) => {
-      console.log('Failure PUT '/' route (updating a college');
-      res.redirect('/error');
-  })
-});
+    .then(() => {
+      models.Colleges.findOne({
+        where: {id: req.params.id}
+      })
+        .then((user) => {
+          res.json(user)
+        })
+    })
+    .catch((err) => {
+      console.log('ERROR while getting a College information', err)
+      res.redirect('/error')
+    })
+})
 
-//deletes a college
+//  deletes a college
 router.delete('/:id', (req, res) => {
-  models.Colleges.findById(parseInt(req.params.id))
-  .then((college) => {
-    college.destroy();
-    res.sendStatus(200);
+  models.Colleges.destroy({
+    where: {id: req.params.id}
   })
-  .catch((err) => {
-      console.log('Failure DELETE '/' route (deleting a college');
-      res.redirect('/error');
-  })
-});
+    .then((id) => {
+      res.json('Successufully deleted!')
+    })
+})
 
-/*
-//SEARCH :name = is any key I defined,use to access the req. 
+//  SEARCH college by name. NOTE: 'name:' is any key I defined,use to access the req. 
+//  Path: http://localhost:8000/api/colleges/search/COLLEGENAME
 router.get('/search/:name', (req, res) => {
   models.Colleges.findAll({
-   where: {
-     name: {
-       $like: '%' + req.params.name + '%'
-     }
-   }
- })
- .then((data) => {
-    res.send(data)
- })
-  .catch((err) => {
-      console.log('ERROR while getting findAll Colleges');
-      res.redirect('/error');
+    where: {
+      name: {
+        $like: '%' + req.params.name + '%'
+      }
+    }
+  })
+    .then((data) => {
+      res.json(data)
     })
-});
-*/
+    .catch((err) => {
+      console.log('ERROR while getting findAll Colleges', err)
+      res.redirect('/error')
+    })
+})
 
-module.exports = router;
+module.exports = router
