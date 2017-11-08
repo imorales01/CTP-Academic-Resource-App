@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt-nodejs')
-const Post = require('./Post');
+//const Post = require('./Post');
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
