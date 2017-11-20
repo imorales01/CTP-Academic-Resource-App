@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 
-class Profile extends Component {
+export default class Profile extends Component {
   // we are getting the props from login component
   constructor(props){
     super(props);
@@ -36,9 +36,9 @@ class Profile extends Component {
   }
 
   render() {
-    console.log('this.state:', this.state)
+    console.log('this.state in Profile\:', this.state)
     return (
-      <div className="App">
+      <div className="container">
 
         <h1 style={{color:'blue', fontSize: '30px'}}>
           PROFILE  
@@ -55,4 +55,3 @@ class Profile extends Component {
   }
 }
 
-export default Profile;

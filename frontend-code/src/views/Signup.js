@@ -3,7 +3,7 @@ import {browserHistory} from 'react-router'
 
 
 
-class Signup extends Component {
+export default class Signup extends Component {
   constructor(props){
     super(props);
     this.state={
@@ -58,7 +58,7 @@ class Signup extends Component {
       let result = data;
       console.log('Request succeeded with JSON response', result);
       this.setState({userInfo: result})
-      // passing userName as prrops and redirect to profile/:userName 
+      // passing userName as props and redirect to profile/:userName 
       browserHistory.push(`/profile/${this.state.userInfo.userName}`);
     })
     .catch(function (error) {
@@ -123,4 +123,3 @@ class Signup extends Component {
   }
 }
 
-export default Signup;

@@ -1,8 +1,6 @@
 // NOTES: 
 // - PREFIX EVERYTHING WITH API
 // - FOR REACT / WILL REDIRECT U TO /  
-
-
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
@@ -13,7 +11,7 @@ import './App.css';
 
 // THIS IS signup IS ALREADY WORKING
 
-class App extends Component {
+export default class App extends Component {
   constructor(props){
     super(props);
     this.state={
@@ -163,4 +161,3 @@ class App extends Component {
   }
 }
 
-export default App;

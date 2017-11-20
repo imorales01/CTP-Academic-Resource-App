@@ -9,7 +9,7 @@ const Redirect = require('../middlewares/redirect')
 router.get('/', (req, res) => {
   models.Post.findAll()
     .then((data) => {
-      res.send(data)
+      res.json(data)
     })
     .catch((err) => {
       console.log('ERROR while getting findAll Post', err)
@@ -17,65 +17,69 @@ router.get('/', (req, res) => {
     })
 })
 
-// creates a post
-router.post('/new-post', (req, res) => {
-  // models.Post.create({
-  //   title: req.body.title,
-  //   body: req.body.body
-  // })
-  req.post.createPost({
-      slug: getSlug(req.body.title.toLowerCase()),
-      title: req.body.title.toLowerCase(),
-      body: req.body.body,
+// get a book by the title: http://localhost:8000/api/post/:bookTitle
+router.get('/:bookTitle', (req,res) => {
+  models.Post.findAll({
+    where: {
+      bookTitle: req.params.bookTitle,
+    }
   })
-    .then((college) => {
-      res.send(college)
+  .then((department) => {
+      res.json(department);
     })
-    .catch((err) => {
-      console.log('ERROR while creating a new College', err)
-      res.send('/error')
-    })
-})
-
-// gets a post by slug
-router.get('/:username/:slug', (req, res) => {
-	 models.Post.findOne({
-      where: {
-        slug: req.params.slug,
-      },
-      include: [{
-        model: models.User,
-        where: {
-          username: req.params.username,
-        },
-      }],
-    })
-	 .then((college) => {
-      res.send(college)
-    })
-    .catch((err) => {
-      console.log('ERROR while creating a new College', err)
-      res.send('/error')
+    .catch(() => {
+      res.sendStatus(400);
     })
 })
 
-// updates a post 
-router.put('/:username/:slug', (req, res) => {
+
+// creates a post 
+router.post('/new-post', (req, res) => {
+  models.Post.create({
+    bookTitle: req.body.bookTitle,
+    userName: req.body.userName,
+    condition: req.body.condition,
+    format: req.body.format,
+    deparment: req.body.deparment,
+    course: req.body.course,
+    price: req.body.price,
+    UserId: req.body.UserId
+  })
+  .then((post) => {
+    res.json(post)
+  })
+  .catch((err) => {
+    console.log('ERROR while creating a new Post', err)
+    res.sendStatus(400);
+  })
+})
+
+// updates a post: http://localhost:8000/api/post/Luis123/Dark Matters
+router.put('/:userName/:bookTitle', (req, res) => {
 	models.Post.findOne({
-		where: {slug: req.params.slug},
-		include: [{
-        model: models.User,
-        where: {
-          username: req.params.username,
-        },
-      }]
+		where: {
+      bookTitle: req.params.bookTitle,
+      userName: req.params.userName
+    }
 	})
 	.then((postInfo) => {
       postInfo.update({
-        title: req.body.title.toLowerCase(),
-      	slug: getSlug(req.body.title.toLowerCase()),
-      	body: req.body.body
+        bookTitle: req.body.bookTitle,
+        userName: req.body.userName,
+        condition: req.body.condition,
+        format: req.body.format,
+        deparment: req.body.deparment,
+        course: req.body.course,
+        price: req.body.price,
+        UserId: req.body.UserId
       })
+    })
+    .then(() => {
+      res.sendStatus(200)
+    })
+    .catch((err) => {
+      console.log('ERROR while updating a Post', err)
+      res.sendStatus(400);
     })
 })
 
@@ -93,7 +97,7 @@ router.delete('/:username/:slug', (req, res) => {
       }],
     })
     .then((id) => {
-      res.send('Successufully deleted!')
+      res.json('Successufully deleted!')
     })
 })
 
