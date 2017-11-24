@@ -26,3 +26,19 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+
+.moduleSection {
+    background-color: white;
+    border: 3px solid #ccc;
+    border-collapse: collapse;
+    border-radius: 6px;
+    width: 100%;
+}
+
+.status {
+    height: 35px;
+    padding: 0 20px;
+    text-align: right;
+    width: 105px;
+}

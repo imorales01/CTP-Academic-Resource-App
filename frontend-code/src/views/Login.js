@@ -3,15 +3,15 @@ import {browserHistory} from 'react-router'
 import './../App.css';
 
 
-class Login extends Component {
+export default class Login extends Component {
   constructor(props){
     super(props);
     this.state={
       email:'',
       password:'',
-      userInfo:''
+      userInfo:'',
     }
-  this.loginAuthentication = this.loginAuthentication.bind(this); 
+  this.loginAuthentication = this.loginAuthentication.bind(this);
   }
 
   handleChange(inputField, e){
@@ -51,11 +51,12 @@ class Login extends Component {
   }
 
   render() {
+    console.log('this:', this.state)
     return (
       <div className="App">
         <h1 style={{color:'blue', fontSize: '30px'}}>
           LOGIN  
-        </h1>
+        </h1> 
 
         <form className="form-inline justify-content-center">
           <div className="form-group">
@@ -78,4 +79,3 @@ class Login extends Component {
   }
 }
 
-export default Login;

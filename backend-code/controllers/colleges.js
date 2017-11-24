@@ -35,7 +35,8 @@ router.post('/', (req, res) => {
 //  gets a college by id
 router.get('/:id', (req, res) => {
   models.Colleges.findOne({
-    where: {id: req.params.id}
+    where: {id: req.params.id},
+    include: [{model: models.Departments}]
   })
     .then((collegeInfo) => {
       res.json(collegeInfo)

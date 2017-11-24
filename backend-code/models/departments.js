@@ -4,11 +4,9 @@ module.exports = (sequelize, DataTypes) => {
 		departmentChairman: DataTypes.STRING
 	});
 
-	/*
 	Departments.associate = (models) => {
-		models.Departments.hasMany(models.Courses);
 		models.Departments.belongsTo(models.Colleges);
+		models.Departments.hasMany(models.Courses);
 	}
-	*/
 	return Departments;
 };

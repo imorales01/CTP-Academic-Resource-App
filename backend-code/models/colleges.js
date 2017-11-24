@@ -32,8 +32,7 @@ module.exports = (sequelize, DataTypes) => {
   })
   
   Colleges.associate = (models) => {
-    // uncomment for associations when Department models is ready 
-    // models.College.hasMany(models.Department)
+    models.Colleges.hasMany(models.Departments)
   }
   return Colleges
 }

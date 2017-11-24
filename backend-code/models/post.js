@@ -1,25 +1,50 @@
 
 const User = require('./user');
-// composite index groups of equities
 module.exports = (sequelize, DataTypes) => {
   const Post = sequelize.define('Post', {
-    slug: {
+    bookTitle: {
       type: DataTypes.STRING,
-      unique: 'compositeIndex',
-      allowNull: true,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    title: {
-      type: DataTypes.STRING,
-      unique: 'compositeIndex',
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    body: {
+    userName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    condition: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    format: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    deparment: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    course: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    price: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
