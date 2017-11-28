@@ -30,7 +30,10 @@ router.post('/', (req, res) => {
 
 // gets a department
 router.get('/:id', (req, res) => {
-  models.Departments.findById(parseInt(req.params.id))
+  models.Departments.findOne({
+  	where: {id: req.params.id},
+  	include: [{model: models.Courses}]
+  })
   .then((department) => {
 	    res.json(department);
 	  })

@@ -6,10 +6,9 @@ module.exports = (sequelize, DataTypes) => {
 		edition: DataTypes.STRING,
 		format: DataTypes.STRING
 	});
-	/*
-	Book.associate = (models) => {
-		models.Book.belongsTo(models.Course);
+
+	Books.associate = (models) => {
+		models.Books.belongsTo(models.Courses);
 	}
-	*/
 	return Books;
 };
