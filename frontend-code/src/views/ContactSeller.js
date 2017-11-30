@@ -1,10 +1,11 @@
+
 import React, { Component } from 'react';
 import {browserHistory} from 'react-router'
 import './../App.css';
 import {connect} from 'react-redux';
 import * as userActions from './reducers/userActions.js';
 
-class Login extends Component {
+class ContactSeller extends Component {
   constructor(props){
     super(props);
     this.state={
@@ -42,7 +43,6 @@ class Login extends Component {
       let result = data;
       console.log('Request succeeded with JSON response in Login', result);
       this.setState({userInfo: result.user})
-      this.props.login(this.state.userInfo)
 
 
       // passing userName as prrops and redirect to profile/:userName 
@@ -58,7 +58,7 @@ class Login extends Component {
     return (
       <div className="App">
         <h1 style={{color:'blue', fontSize: '30px'}}>
-          LOGIN  
+          Contact Seller  
         </h1> 
 
         <form className="form-inline justify-content-center">
@@ -83,6 +83,6 @@ class Login extends Component {
 }
 
 // connects: mapStoreToProps is a global state in the props
-export default connect(null, userActions)(Login);
+export default connect(null, userActions)(ContactSeller);
 
 

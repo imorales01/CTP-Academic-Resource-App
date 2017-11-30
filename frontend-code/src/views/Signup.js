@@ -1,9 +1,11 @@
+
 import React, { Component } from 'react';
-import {browserHistory} from 'react-router'
+import {browserHistory} from 'react-router';
+import {connect} from 'react-redux';
+import * as userActions from './reducers/userActions.js';
 
 
-
-export default class Signup extends Component {
+class Signup extends Component {
   constructor(props){
     super(props);
     this.state={
@@ -58,6 +60,9 @@ export default class Signup extends Component {
       let result = data;
       console.log('Request succeeded with JSON response', result);
       this.setState({userInfo: result})
+
+      console.log(' sing up this.state.userInfo after setting result', this.state.userInfo) 
+      this.props.login(this.state.userInfo)
       // passing userName as props and redirect to profile/:userName 
       browserHistory.push(`/profile/${this.state.userInfo.userName}`);
     })
@@ -122,4 +127,6 @@ export default class Signup extends Component {
     );
   }
 }
+
+export default connect(null, userActions)(Signup);
 

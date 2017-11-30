@@ -23,7 +23,7 @@ class SellersBookDetail extends Component {
 		super(props)
 		this.state = {
 			bookId: props.routeParams.id,
-      		bookInfo: '',
+      bookInfo: '',
 			postInfo: '',
 		}
 	}

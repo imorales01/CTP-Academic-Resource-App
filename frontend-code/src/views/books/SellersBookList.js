@@ -64,7 +64,4 @@ export default class SellersBookList extends Component {
 		    </div>
 		)
 	}
-
-
-
 }

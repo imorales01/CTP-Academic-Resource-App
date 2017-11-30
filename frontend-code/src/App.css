@@ -42,3 +42,11 @@
     text-align: right;
     width: 105px;
 }
+
+
+.loggedUser {
+    color: #ff0081;
+    margin-top: 14px;
+    margin-left: 47px;
+    font-weight: 700;
+}

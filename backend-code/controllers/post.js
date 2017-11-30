@@ -33,6 +33,23 @@ router.get('/:bookTitle', (req,res) => {
 })
 
 
+
+// get a book by id: http://localhost:8000/api/postInfo/:id
+router.get('/postInfo/:id', (req,res) => {
+  models.Post.findOne({
+    where: {
+      id: req.params.id,
+    }
+  })
+  .then((department) => {
+      res.json(department);
+    })
+    .catch(() => {
+      res.sendStatus(400);
+    })
+})
+
+
 // creates a post 
 router.post('/new-post', (req, res) => {
   models.Post.create({

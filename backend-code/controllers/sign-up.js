@@ -15,6 +15,18 @@ router.post('/', (req, res) => {
     password: req.body.password,
   })
     .then((user) => {
+
+      // passport.authenticate('local') function()
+
+
+//       , (req, res) => {
+//   console.log('You are loged in!!')
+//   return res.json({ success: true, user: req.user });
+// }
+
+
+
+
       res.json(user)
     })
     .catch((err) => {
