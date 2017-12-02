@@ -31,3 +31,4 @@ const mapStoreToProps = store => (
 )
 
 export default connect(mapStoreToProps, userActions)(Home);
+

@@ -63,6 +63,10 @@ import * as userActions from './reducers/userActions.js';
                   (null)
                   }
 
+                  <li className="linetext"><Link to="/search">Search</Link></li>
+
+
+
                 </ul>
               </div>
 

@@ -18,6 +18,7 @@ import SellersBookDetail from './views/books/SellersBookDetail';
 import SellersBookList from './views/books/SellersBookList';
 import SellerProfile from './views/SellerProfile';
 import BooksByCollege from './views/books/BooksByCollege';
+import SearchByPostTitle from './views/SearchByPostTitle';
 
 
 const store = createStore(reducers)
@@ -52,6 +53,7 @@ ReactDOM.render(
 				<Route path="/sellers-profile/:id" component={SellerProfile} /> 
 				<Route path="/sellers-book-detail/:id" component={SellersBookDetail} /> 
 				<Route path="/by-college" component={BooksByCollege} />
+				<Route path="/search" component={SearchByPostTitle} />
 			 </Route>
 		</Router>
 	</Provider>,

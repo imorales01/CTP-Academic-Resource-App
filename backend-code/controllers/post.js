@@ -118,4 +118,22 @@ router.delete('/:username/:slug', (req, res) => {
     })
 })
 
+// postTitle is a key I defined to access the req.
+router.get('/search/:postTitle',(req,res)=>{
+  models.Post.findAll({
+    where: {
+      bookTitle: {
+        $ilike: '%' + req.params.postTitle + '%'
+    }
+    }
+  })
+  .then((data)=>res.send(data))
+})
+
+
+
+
+
+
+
 module.exports = router
