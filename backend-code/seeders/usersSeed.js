@@ -4,7 +4,21 @@ const UsersSeedFunc = () => {
 	models.User.sync({force: true})
 		.then(() => {
 			models.User.bulkCreate([
-				{firstName: 'John', lastName: 'Mrz', userName: 'John123', email: 'John@gmail.com', cunyId:'001', college: 'City Tech', password_hash: '$2a$10$3xwiwQQntK5HVXySfrPnVebJKMSJEvwibpHDSdYP51MI.qaZw93Ei' },
+				
+				{
+					firstName: 'Luis', 
+					lastName: 'Carbajal', 
+					userName: 'Luis123', 
+					email: 'Luis@gmail.com', 
+					cunyId:'001', 
+					college: 'City Tech', 
+					image:'public/uploads/Luis.jpg', 
+					password_hash: '$2a$10$chOlD1UUr3Fznp5Bn7cm.uJLkHXUtSnG/LC8g3T2GpwMYSARiHLfC' 
+			  },
+
+			  //CHUCK PLEASE ADD MORE RECORDS HERE AS THE EXAMPLE ABOVE. ONCE U ARE DONE YOU CAN RUN  FOLLOWING THE INSTRUCTIONS ON COLLEGESEED.JS FILE 
+
+
 		]);
 	})
 };
