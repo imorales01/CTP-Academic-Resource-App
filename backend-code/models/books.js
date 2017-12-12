@@ -4,7 +4,9 @@ module.exports = (sequelize, DataTypes) => {
 		author: DataTypes.STRING,
 		year: DataTypes.STRING,
 		edition: DataTypes.STRING,
-		format: DataTypes.STRING
+		format: DataTypes.STRING,
+		image: DataTypes.STRING,
+		description: DataTypes.STRING
 	});
 
 	Books.associate = (models) => {

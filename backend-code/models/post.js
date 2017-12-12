@@ -1,54 +1,80 @@
 
 const User = require('./user');
+// here
 module.exports = (sequelize, DataTypes) => {
   const Post = sequelize.define('Post', {
     bookTitle: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true,
+        notEmpty: false,
+      },
+    },
+    bookAuthor: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: false,
       },
     },
     userName: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true,
+        notEmpty: false,
       },
     },
     condition: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true,
+        notEmpty: false,
+      },
+    },
+    isbn: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: false,
       },
     },
     format: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true,
+        notEmpty: false,
       },
     },
     deparment: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       validate: {
-        notEmpty: true,
+        notEmpty: false,
       },
     },
     course: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true,
+        notEmpty: false,
       },
     },
     price: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true,
+        notEmpty: false,
+      },
+    },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: false,
       },
     },
 

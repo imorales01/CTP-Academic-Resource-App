@@ -34,19 +34,6 @@ class Signup extends Component {
   selectDropDown(e) {
     console.log('college selected:', e.target.value)
     this.setState({college: e.target.value})
-    // fetch('http://localhost:8000/api/colleges/' + collegeId, {
-    //   method: 'get',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    // })
-    // .then((response) => {
-    //   return response.json()
-    // })
-    // .then((result) => {
-    //   this.setState({collegeDepartments: result})
-    // })
   }
 
   //@componentWillMount: Fetches all colleges and renders them
@@ -108,7 +95,7 @@ class Signup extends Component {
       console.log(' sing up this.state.userInfo after setting result', this.state.userInfo) 
       this.props.login(this.state.userInfo)
       // passing userName as props and redirect to profile/:userName 
-      browserHistory.push(`/profile/${this.state.userInfo.userName}`);
+      browserHistory.push(`/upload-user-profile-image/${this.state.userInfo.userName}`);
     })
     .catch(function (error) {
       console.log('Request failed', error);
@@ -119,6 +106,7 @@ class Signup extends Component {
 
   render() {
     console.log('this.state:', this.state)
+    console.log('this.state:', this.state.userInfo.userName)
     return (
 
       <div className="container">

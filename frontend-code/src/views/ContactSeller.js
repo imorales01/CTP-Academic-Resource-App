@@ -55,6 +55,7 @@ class ContactSeller extends Component {
 
   render() {
     console.log('this:', this.state)
+    console.log('this.props in ContactSeller:', this.props.userState.user)
     return (
       <div className="App">
         <h1 style={{color:'blue', fontSize: '30px'}}>
@@ -62,14 +63,15 @@ class ContactSeller extends Component {
         </h1> 
 
         <form className="form-inline justify-content-center">
+
           <div className="form-group">
-            <label>Email</label><br/>
-            <input type="email" onChange={this.handleChange.bind(this, 'email')}  className="form-control" placeholder=' Email Address' required="required"  autoFocus />
+            <label>Subject</label><br/>
+            <input type="email" onChange={this.handleChange.bind(this, 'email')}  className="form-control" placeholder='Subject' required="required"  autoFocus />
           </div><br/>
 
           <div className="form-group">
-            <label>Password</label><br/>
-            <input type="password" onChange={this.handleChange.bind(this, 'password')}  className="form-control" placeholder=' Password' />
+            <label>Message</label><br/>
+            <input type="password" onChange={this.handleChange.bind(this, 'password')}  className="form-control" placeholder=' Enter your message' />
           </div><br/><br/>
 
           <div className="form-group">
@@ -82,7 +84,12 @@ class ContactSeller extends Component {
   }
 }
 
+//@mapStoreToProps: makes available the userState from our redux state
+const mapStoreToProps = store => (
+  {userState: store.userReducer}
+)
+
 // connects: mapStoreToProps is a global state in the props
-export default connect(null, userActions)(ContactSeller);
+export default connect(mapStoreToProps, userActions)(ContactSeller);
 
 

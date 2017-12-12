@@ -36,6 +36,7 @@ export default class SellersBookList extends Component {
 
 	render() {
 		console.log('booksInfo: ', this.state.booksInfo)
+		console.log('sessionId in booksInfo', sessionStorage.getItem('currentUser'))
 		return (
 			
 			<div className="App">
@@ -48,9 +49,13 @@ export default class SellersBookList extends Component {
                   (this.state.booksInfo.map((book, key) => {
                     return(
                       <li key={key}>
-                          <img src={'https://images-na.ssl-images-amazon.com/images/I/51OPx5KCYqL._SX332_BO1,204,203,200_.jpg'} alt="book cover of the universe"/>
+                          <img src={"http://localhost:8000/" + book.image} alt="book cover of the universe"/><br/>
+
+                          {/*<img src={'https://images-na.ssl-images-amazon.com/images/I/51OPx5KCYqL._SX332_BO1,204,203,200_.jpg'} alt="book cover of the universe"/>*/}
+
                       {/*// passing book.id as props and redirect to /sellers-book-detail/:id */}
                           <h1><Link to={'/sellers-book-detail/'+ book.id}>Title: {book.title}</Link></h1>
+
                           <h1>Author: {book.author}</h1>
                           <h1>Edition: {book.edition}</h1>
                           <h1>Format: {book.format}</h1>

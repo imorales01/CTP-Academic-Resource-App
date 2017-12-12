@@ -1,6 +1,12 @@
+/******************************************************************************
+Title           : SearchByPostTitle.js
+Author          : Academic Resources App
+Description     : SearchByPostTitle  search post by title with the props pass by  information that is pass SearchInNavBar.js
+******************************************************************************/
 import React, { Component } from 'react';
 import {browserHistory, Link} from 'react-router'
 import './../App.css';
+
 
 export default class SearchByPostTitle extends Component {
 
@@ -8,17 +14,13 @@ export default class SearchByPostTitle extends Component {
     super(props);
     this.state = {
       post:[],
-      inputToSearch: '',
+      inputToSearch: this.props.params.input,
     }
-    this.getPostTitles = this.getPostTitles.bind(this)
-    this.handleChange = this.handleChange.bind(this)
   }
-  
 
-  getPostTitles(e) {
-    e.preventDefault()
+  // @componentDidMount: It runs before rendering or when page is loading and get all post tha contain inputToSearch 
+  componentDidMount() {
     let inputToSearch = this.state.inputToSearch;
-    console.log('inputToSearch:', inputToSearch)
     fetch("http://localhost:8000/api/post/search/" + inputToSearch , {
       method: 'get',
       header: {
@@ -30,13 +32,35 @@ export default class SearchByPostTitle extends Component {
       return response.json()
     })
     .then((result) => {
-      console.log('result:', result)
       this.setState({
         post: result
       })
     })
   }
 
+  
+  // @componentWillReceiveProps: It runs after props change. Then fetch posts with the new inputToSearch and re setState which cause to render again
+  componentWillReceiveProps(nextProps) {
+    this.setState({inputToSearch: nextProps.params.input})
+    let inputToSearch = nextProps.params.input;
+    fetch("http://localhost:8000/api/post/search/" + inputToSearch, {
+      method: 'get',
+      header: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((response) => {
+      return response.json()
+    })
+    .then((result) => {
+      this.setState({
+        post: result
+      })
+    })
+  }
+
+  // @handleChange: on handleChange setState of the inpu that is calling it 
   handleChange(inputField, e){
     this.setState({[inputField] : e.target.value})
   }
@@ -44,17 +68,21 @@ export default class SearchByPostTitle extends Component {
   render(){
     console.log('state:', this.state)
     return(
+
       <div className='container' style={{minHeight: '450px'}}>
-        <center>
-          <form onSubmit={this.getPostTitles}>
 
-            <input className='input-search-searchComponent' type="text" placeholder="Quick Search" onChange={this.handleChange.bind(this, 'inputToSearch')} name="inputToSearch" required="required"  autoFocus />
-
-            <button type="submit" className="btn btn-success">Search</button>
-          </form>
-        </center>
+        <div className="col-xs-12 col-sm-6">
+          {/* this.state.post[0] checks if post exist*/}
+          {
+            (this.state.post[0]) ?
+            (<div> Results for <strong>{this.state.inputToSearch}</strong></div>) :
+            (<div> Sorry not Results for <strong>{this.state.inputToSearch}</strong></div>)
+          } 
+        </div>
+        
 
         <div className='middle'>
+
           {this.state.post.map((ele,i)=>{
             return (
               <div key={i} className='gallery'>
@@ -70,14 +98,11 @@ export default class SearchByPostTitle extends Component {
             )
           })}
         </div>
-
         <div className="searchEmpty-container"></div>
+
       </div>
     )
   }
-
-
-
 
 }
 

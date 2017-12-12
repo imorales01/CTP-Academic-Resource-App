@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import * as userActions from './reducers/userActions.js';
-
+// import UploadImage from './UploadImage' I think we can 
 
 class Home extends Component {
   constructor(props){
@@ -13,12 +13,16 @@ class Home extends Component {
 
   render() {
     console.log('this.props home:', this.props)
+    console.log('sessionId', sessionStorage.getItem('currentUser'))
     return (
       <div className="container" style={{ width: '100%'}}>
 
         <p>
           YOU ARE IN HOME SCREEN 
         </p>
+
+    
+
 
       </div>
     );

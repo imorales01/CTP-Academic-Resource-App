@@ -11,14 +11,27 @@ import reducers from './views/reducers'
 import './App.css';
 import NavBar from './views/NavBar';
 import Profile from './views/Profile';
+import CreatePost from './views/posts/CreatePost';
+import SinglePostDetails from './views/posts/SinglePostDetails';
+import UploadImageForBookPost from './views/posts/UploadImageForBookPost';
+
+import ListPostManager from './views/postsManager/ListPostManager';
+import SinglePostManager from './views/postsManager/SinglePostManager';
+
+
 import Home from './views/Home';
 import Signup from './views/Signup';
 import Login from './views/Login';
+import UploadImageForUser from './views/UploadImageForUser';
+
 import SellersBookDetail from './views/books/SellersBookDetail';
 import SellersBookList from './views/books/SellersBookList';
 import SellerProfile from './views/SellerProfile';
 import BooksByCollege from './views/books/BooksByCollege';
 import SearchByPostTitle from './views/SearchByPostTitle';
+
+
+import Chat from './views/Chat';
 
 
 const store = createStore(reducers)
@@ -53,7 +66,19 @@ ReactDOM.render(
 				<Route path="/sellers-profile/:id" component={SellerProfile} /> 
 				<Route path="/sellers-book-detail/:id" component={SellersBookDetail} /> 
 				<Route path="/by-college" component={BooksByCollege} />
-				<Route path="/search" component={SearchByPostTitle} />
+				<Route path="/search/:input" component={SearchByPostTitle} />
+				<Route path="/create-post" component={CreatePost} />
+				<Route path="/upload-post-image/:postId" component={UploadImageForBookPost} />
+				<Route path="/single-post-details/:postId" component={SinglePostDetails} />
+				<Route path="/posts-manager" component={ListPostManager} />
+				
+				<Route path="/post-manager/:id" component={SinglePostManager} />
+
+				<Route path="/upload-user-profile-image/:postId" component={UploadImageForUser} />
+
+
+
+				<Route path="/chat" component={Chat} />
 			 </Route>
 		</Router>
 	</Provider>,

@@ -43,6 +43,7 @@ class Login extends Component {
       console.log('Request succeeded with JSON response in Login', result);
       this.setState({userInfo: result.user})
       this.props.login(this.state.userInfo)
+      sessionStorage.setItem('currentUser', result.user.userName)
 
 
       // passing userName as prrops and redirect to profile/:userName 
@@ -56,6 +57,7 @@ class Login extends Component {
 
   render() {
     console.log('this:', this.state)
+    console.log('sessionId in home', sessionStorage.getItem('currentUser'))
     return (
       <div className="container">
         <center>

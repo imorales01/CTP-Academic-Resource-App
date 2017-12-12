@@ -5,6 +5,75 @@ const User = require('../models/user')
 const getSlug = require('speakingurl')
 const Redirect = require('../middlewares/redirect')
 
+// ADDING LIBRARIES FOR IMAGE 
+const fs = require('fs');
+const path = require('path');
+const multer = require('multer')
+
+const storage = multer.diskStorage({
+  destination: './public/uploads',
+  filename(req, file, cb) {
+    cb(null, `${new Date()}-${file.originalname}`);
+  },
+}) 
+
+const upload = multer({ storage })
+
+// add picture to post
+router.put('/:id/picture', 
+  upload.single('post-img'), 
+  (req, res) => {
+    // file passed from client
+    const file = req.file;
+    console.log('file in post controllers:', file)
+    console.log('body in post controllers:', req.body)
+    console.log('id in post controllers:', req.params.id)
+    // meta all other values passed from the client
+    const meta = req.body;
+    models.Post.findOne({
+      where: {id: req.params.id}
+    })
+    .then((post) => {
+      post.update({
+        image: file.path
+      })
+    })
+    .then((data) => {
+      res.json(data)
+    })
+    .catch((err) => {
+      console.log('ERROR while updating a Post', err)
+      res.sendStatus(400)
+    })
+})
+
+// creates a post 
+router.post('/new-post', (req, res) => {
+  models.Post.create({
+    bookTitle: req.body.bookTitle,
+    bookAuthor: req.body.bookAuthor,
+    userName: req.body.userName,
+    condition: req.body.condition,
+    isbn: req.body.isbn,
+    format: req.body.format,
+    deparment: req.body.deparment,
+    course: req.body.course,
+    price: req.body.price,
+    image: req.body.image,
+    description: req.body.description,
+    UserId: req.body.UserId
+  })
+  .then((post) => {
+    res.json(post)
+  })
+  .catch((err) => {
+    console.log('ERROR while creating a new Post', err)
+    res.sendStatus(400);
+  })
+})
+
+
+
 // get all posts: http://localhost:8000/api/post
 router.get('/', (req, res) => {
   models.Post.findAll()
@@ -16,6 +85,29 @@ router.get('/', (req, res) => {
       res.redirect('/error')
     })
 })
+
+
+
+// get all posts: where UserId = UserId
+// http://localhost:8000/api/post/:userId
+// router.get('/id', (req,res) => {
+//   models.Post.findAll({
+//     where: {
+//       id: req.params.id,
+//     }
+//   })
+//   .then((data) => {
+//     res.json(data)
+//   })
+//   .catch((err) => {
+//     console.log('ERROR while getting findAll Post', err)
+//     res.redirect('/error')
+//   })
+// })
+
+
+
+
 
 // get a book by the title: http://localhost:8000/api/post/:bookTitle
 router.get('/:bookTitle', (req,res) => {
@@ -34,7 +126,7 @@ router.get('/:bookTitle', (req,res) => {
 
 
 
-// get a book by id: http://localhost:8000/api/postInfo/:id
+// get a book Post by id: http://localhost:8000/api/post/postInfo/:id
 router.get('/postInfo/:id', (req,res) => {
   models.Post.findOne({
     where: {
@@ -49,27 +141,6 @@ router.get('/postInfo/:id', (req,res) => {
     })
 })
 
-
-// creates a post 
-router.post('/new-post', (req, res) => {
-  models.Post.create({
-    bookTitle: req.body.bookTitle,
-    userName: req.body.userName,
-    condition: req.body.condition,
-    format: req.body.format,
-    deparment: req.body.deparment,
-    course: req.body.course,
-    price: req.body.price,
-    UserId: req.body.UserId
-  })
-  .then((post) => {
-    res.json(post)
-  })
-  .catch((err) => {
-    console.log('ERROR while creating a new Post', err)
-    res.sendStatus(400);
-  })
-})
 
 // updates a post: http://localhost:8000/api/post/Luis123/Dark Matters
 router.put('/:userName/:bookTitle', (req, res) => {

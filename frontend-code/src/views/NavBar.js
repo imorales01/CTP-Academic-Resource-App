@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router'
+import {Link, browserHistory} from 'react-router'
 import {connect} from 'react-redux';
 import * as userActions from './reducers/userActions.js';
+import SearchInNavBar from './SearchInNavBar'
 
 
  class NavBar extends Component {
@@ -15,14 +16,13 @@ import * as userActions from './reducers/userActions.js';
   // handleLogout: logouts the current user
   // @logout: action from userActions
   handleLogout(e){
-
     //action from userActions didn't work so for now use window command to refresh page
     (()=>{
     this.props.logout() 
     })
-
-    window.location.reload(false)
+    window.location.reload()
   }
+
 
   render(){
     console.log('this.props NavBar:', this.props)
@@ -42,8 +42,11 @@ import * as userActions from './reducers/userActions.js';
                 <ul className="nav navbar-nav">
                   <li className="linetext"><Link to="/">Home</Link></li>
                   <li className="linetext"><Link to="/profile">Profile</Link></li>
+                  <li className="linetext"><Link to="/create-post">Create A Post</Link></li>
+                  <li className="linetext"><Link to="/posts-manager">Manage your Ads</Link></li>
                   <li className="linetext"><Link to="/sellers-book-list">All Books</Link></li>
                   <li className="linetext"><Link to="/by-college">Books By College</Link></li>
+                  
 
                   { /* if props exist then show logout otherwise show Login */}
                   {this.props.userState.user ?
@@ -63,14 +66,16 @@ import * as userActions from './reducers/userActions.js';
                   (null)
                   }
 
-                  <li className="linetext"><Link to="/search">Search</Link></li>
-
+                  <li className="linetext" style={{marginTop:'13px',marginLeft: '30px'}}>
+                    <SearchInNavBar />
+                  </li>
 
 
                 </ul>
               </div>
 
           </div>
+
           
         </nav>
     </div>
