@@ -50,6 +50,14 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       },
     },
+    
+    image: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        notEmpty: true,
+      },
+    },
     password_hash: {
       type: DataTypes.STRING,
     },

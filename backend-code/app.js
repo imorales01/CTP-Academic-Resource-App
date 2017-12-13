@@ -9,6 +9,8 @@ const passport = require('./middlewares/authentication');
 const PORT = process.env.PORT || 8000
 const app = express()
 
+const multer = require('multer')
+
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -20,7 +22,7 @@ app.use(cookieParser());
 app.use(expressSession(({ secret: 'keyboard cat', resave: false, saveUninitialized: true })));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static('./public'));
+app.use('/public', express.static('./public'));
 
 
 app.use(bodyParser.json())
@@ -30,6 +32,21 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // Load up all of the controllers
 const controllers = require('./controllers')
 app.use('/api', controllers)
+
+
+//=================================================
+// ADDING IMAGE
+const storage = multer.diskStorage({
+  destination: './public/uploads',
+  filename(req, file, cb) {
+    cb(null, `${new Date()}-${file.originalname}`);
+  },
+});
+
+
+
+
+
 
 
 // First, make sure the Database tables and models are in sync
