@@ -1,27 +1,60 @@
+
 import React, { Component } from 'react';
-import {browserHistory} from 'react-router'
+import {browserHistory} from 'react-router';
+import {connect} from 'react-redux';
+import * as userActions from './reducers/userActions.js';
 
 
-
-export default class Signup extends Component {
+class Signup extends Component {
   constructor(props){
     super(props);
     this.state={
+      colleges: '',
       firstName:'',
       lastName:'',
       userName:'',
       email:'',
       cunyId:'',
-      college:'',
+      collegeName:'',
       password:'',
       userInfo: '',
     }
     this.submitNewPerson = this.submitNewPerson.bind(this);
+    this.selectDropDown = this.selectDropDown.bind(this);
   }
 
   handleChange(inputField, e){
     this.setState({[inputField] : e.target.value})
   }
+
+  /******************************************************************************
+  Function definitions
+  ******************************************************************************/
+  //@selectDropDown: Fetches Cuny colleges
+  selectDropDown(e) {
+    console.log('college selected:', e.target.value)
+    this.setState({college: e.target.value})
+  }
+
+  //@componentWillMount: Fetches all colleges and renders them
+  componentWillMount() {
+    fetch('http://localhost:8000/api/colleges', {
+      method: 'get',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+    .then((response) => {
+      return response.json()
+    })
+    .then((data) => {
+      this.setState({colleges: data})
+    })
+  }
+
+
+
 
   submitNewPerson(e) {
     e.preventDefault()
@@ -58,8 +91,11 @@ export default class Signup extends Component {
       let result = data;
       console.log('Request succeeded with JSON response', result);
       this.setState({userInfo: result})
+
+      console.log(' sing up this.state.userInfo after setting result', this.state.userInfo) 
+      this.props.login(this.state.userInfo)
       // passing userName as props and redirect to profile/:userName 
-      browserHistory.push(`/profile/${this.state.userInfo.userName}`);
+      browserHistory.push(`/upload-user-profile-image/${this.state.userInfo.userName}`);
     })
     .catch(function (error) {
       console.log('Request failed', error);
@@ -69,57 +105,121 @@ export default class Signup extends Component {
   }
 
   render() {
+    console.log('this.state:', this.state)
+    console.log('this.state:', this.state.userInfo.userName)
     return (
-      <div className="App">
 
-        <h1 style={{color:'blue', fontSize: '30px'}}>
-          SIGN UP  
-        </h1>
+      <div className="container">
 
-        <form className="form-inline justify-content-center">
+        <center>
+          <form onSubmit={this.submitNewPerson} className="well form-horizontal">
 
-          <div className="form-group">
-            <label>First Name</label><br/>
-            <input type="firstName" onChange={this.handleChange.bind(this, 'firstName')}  className="form-control" placeholder=' First Name' required="required"  autoFocus/>
-          </div><br/>
+            <h2>Registration Form</h2>
 
-          <div className="form-group">
-            <label>Last Name</label><br/>
-            <input type="lastName" onChange={this.handleChange.bind(this, 'lastName')}  className="form-control" placeholder=' Last Name' required="required" />
-          </div><br/>
+            
+            <div className="form-group">
+              <label className="col-md-4 control-label">First Name</label>  
+              <div className="col-md-4 inputGroupContainer">
+              <div className="input-group">
+              <span className="input-group-addon"><i className="glyphicon glyphicon-user"></i></span>
+              <input  onChange={this.handleChange.bind(this, 'firstName')} type="text" name="firstName"  placeholder="First Name" className="form-control" required="required"  autoFocus/>
+                </div>
+              </div>
+            </div>
 
-          <div className="form-group">
-            <label>User Name</label><br/>
-            <input type="userName" onChange={this.handleChange.bind(this, 'userName')}  className="form-control" placeholder=' User Name' required="required" />
-          </div><br/>
 
-          <div className="form-group">
-            <label>Email</label><br/>
-            <input type="email" onChange={this.handleChange.bind(this, 'email')}  className="form-control" placeholder=' Email Address' required="required" />
-          </div><br/>
+            <div className="form-group">
+              <label className="col-md-4 control-label">Last Name</label>  
+              <div className="col-md-4 inputGroupContainer">
+              <div className="input-group">
+              <span className="input-group-addon"><i className="glyphicon glyphicon-user"></i></span>
+              <input  onChange={this.handleChange.bind(this, 'lastName')} type="text" name="lastName"  placeholder="Last Name" className="form-control"  required />
+                </div>
+              </div>
+            </div>
 
-          <div className="form-group">
-            <label>CUNY ID</label><br/>
-            <input type="cunyId" onChange={this.handleChange.bind(this, 'cunyId')}  className="form-control" placeholder=' CUNY ID' required="required" />
-          </div><br/>
+            <div className="form-group">
+              <label className="col-md-4 control-label">User Name</label>  
+              <div className="col-md-4 inputGroupContainer">
+              <div className="input-group">
+              <span className="input-group-addon"><i className="glyphicon glyphicon-king"></i></span>
+              <input  onChange={this.handleChange.bind(this, 'userName')} type="text" name="userName"  placeholder="User Name" className="form-control"  required />
+                </div>
+              </div>
+            </div>
+            
+            <div className="form-group">
+              <label className="col-md-4 control-label">Email</label>  
+              <div className="col-md-4 inputGroupContainer">
+              <div className="input-group">
+              <span className="input-group-addon"><i className="glyphicon glyphicon-envelope"></i></span>
+              <input  onChange={this.handleChange.bind(this, 'email')} type="email" name="email"  placeholder="Email" className="form-control"  required />
+                </div>
+              </div>
+            </div>
 
-          <div className="form-group">
-            <label>College</label><br/>
-            <input type="college" onChange={this.handleChange.bind(this, 'college')}  className="form-control" placeholder=' College' required="required" />
-          </div><br/>
+            <div className="form-group">
+              <label className="col-md-4 control-label">CUNY ID</label>  
+              <div className="col-md-4 inputGroupContainer">
+              <div className="input-group">
+              <span className="input-group-addon"><i className="glyphicon glyphicon-education"></i></span>
+              <input  onChange={this.handleChange.bind(this, 'cunyId')} type="text" name="cunyId"  placeholder="CUNY ID" className="form-control"  required />
+                </div>
+              </div>
+            </div>
 
-          <div className="form-group">
-            <label>Password</label><br/>
-            <input type="password" onChange={this.handleChange.bind(this, 'password')}  className="form-control" placeholder=' Password' />
-          </div><br/><br/>
 
-          <div className="form-group">
-            <button type="submit" onClick={this.submitNewPerson} className="btn btn-success">Submit</button>
-          </div>
-        </form>
+            
+            {
+              (this.state.colleges) ?
+              (
+                <div className="form-group">
+                  <label className="col-md-4 control-label">College</label>  
+                  <div className="col-md-4 inputGroupContainer">
+                    <div className="input-group">
+                     <span className="input-group-addon"><i className="glyphicon glyphicon-list"></i></span>
+                      <select onChange={this.selectDropDown} name="tags" className="form-control selectpicker" required>
+                      <option value="Please">College Name</option>
+                      {this.state.colleges.map((college, key) => {
+                        return (
+                                <option key={key} value={college.name}>{college.name}</option>
+                               )
+                        })
+                      }
+                    </select>
+                    </div>
+                  </div>
+                </div>
+              ): 
+              (<h1>Loading ...</h1>)
+            }
+
+            <div className="form-group">
+              <label className="col-md-4 control-label">Password</label>  
+              <div className="col-md-4 inputGroupContainer">
+              <div className="input-group">
+              <span className="input-group-addon"><i className="glyphicon glyphicon-text-width"></i></span>
+              <input  onChange={this.handleChange.bind(this, 'password')} type="password" name="password"  placeholder="Password" className="form-control"  required />
+                </div>
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label className="col-md-4 control-label"></label>  
+              <div className="col-md-4">
+                <center>
+                  <button type="submit" className="btn btn-success" style={{height:'40px', width:'153px'}}> Submit <span className="glyphicon glyphicon-send"></span></button>
+                </center>
+              </div>
+            </div>
+
+          </form>
+        </center>
 
       </div>
     );
   }
 }
+
+export default connect(null, userActions)(Signup);
 

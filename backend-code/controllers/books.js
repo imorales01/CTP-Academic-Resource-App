@@ -42,6 +42,24 @@ router.get('/:id', (req, res) => {
 	  })
 });
 
+
+// get a book by the title: http://localhost:8000/api/books/title/bookTitle
+router.get('/title/:title', (req,res) => {
+  models.Books.findOne({
+    where: {
+      title: req.params.title,
+    }
+  })
+  .then((book) => {
+      res.json(book);
+    })
+    .catch(() => {
+      res.sendStatus(400);
+    })
+})
+
+
+
 // updates a book
 router.put('/:id', (req, res) => {
 	models.Books.findById(parseInt(req.params.id))
