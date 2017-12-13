@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import {browserHistory} from 'react-router'
 import './../App.css';
+import {connect} from 'react-redux';
+import * as userActions from './reducers/userActions.js';
 
-
-export default class Login extends Component {
+class Login extends Component {
   constructor(props){
     super(props);
     this.state={
+      userInfo:'',
       email:'',
       password:'',
-      userInfo:'',
     }
   this.loginAuthentication = this.loginAuthentication.bind(this);
   }
@@ -39,43 +40,70 @@ export default class Login extends Component {
     })
     .then((data) => {
       let result = data;
-      console.log('Request succeeded with JSON response', result);
-      this.setState({userInfo: result})
+      console.log('Request succeeded with JSON response in Login', result);
+      this.setState({userInfo: result.user})
+      this.props.login(this.state.userInfo)
+      sessionStorage.setItem('currentUser', result.user.userName)
+
 
       // passing userName as prrops and redirect to profile/:userName 
-      browserHistory.push(`/profile/${this.state.userInfo.user.userName}`);
+      browserHistory.push(`/profile/${this.state.userInfo.userName}`);
     })
     .catch(function (error) {
       console.log('Request failed', error);
     });
   }
+  
 
   render() {
     console.log('this:', this.state)
+    console.log('sessionId in home', sessionStorage.getItem('currentUser'))
     return (
-      <div className="App">
-        <h1 style={{color:'blue', fontSize: '30px'}}>
-          LOGIN  
-        </h1> 
+      <div className="container">
+        <center>
+          <form onSubmit={this.loginAuthentication} className="well form-horizontal">
 
-        <form className="form-inline justify-content-center">
-          <div className="form-group">
-            <label>Email</label><br/>
-            <input type="email" onChange={this.handleChange.bind(this, 'email')}  className="form-control" placeholder=' Email Address' required="required"  autoFocus />
-          </div><br/>
+            <h2>Sign in</h2>
 
-          <div className="form-group">
-            <label>Password</label><br/>
-            <input type="password" onChange={this.handleChange.bind(this, 'password')}  className="form-control" placeholder=' Password' />
-          </div><br/><br/>
+            <img id="log" src="https://firebasestorage.googleapis.com/v0/b/interestesapp.appspot.com/o/jtnAkFHYrieKZ93N7Kf8OJdEx4Y2%2Flogin.png?alt=media&token=15aa9d1c-93b0-4001-91e1-2a21fd0298a2" /><br/><br/>
 
-          <div className="form-group">
-            <button type="submit" onClick={this.loginAuthentication} className="btn btn-success">Submit</button>
-          </div>
-        </form>
+            <div className="form-group">
+              <label className="col-md-4 control-label">Email</label>  
+              <div className="col-md-4 inputGroupContainer">
+              <div className="input-group">
+              <span className="input-group-addon"><i className="glyphicon glyphicon-envelope"></i></span>
+              <input  onChange={this.handleChange.bind(this, 'email')} type="email" name="email"  placeholder="Email" className="form-control" required="required"  autoFocus/>
+                </div>
+              </div>
+            </div>
 
+            <div className="form-group">
+              <label className="col-md-4 control-label">Password</label>  
+              <div className="col-md-4 inputGroupContainer">
+              <div className="input-group">
+              <span className="input-group-addon"><i className="glyphicon glyphicon-user"></i></span>
+              <input  onChange={this.handleChange.bind(this, 'password')} type="password" name="password"  placeholder="Password" className="form-control"  required />
+                </div>
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label className="col-md-4 control-label"></label>  
+              <div className="col-md-4">
+                <center>
+                  <button type="submit" className="btn btn-success" style={{height:'40px', width:'153px'}}> Login <span className="glyphicon glyphicon-send"></span></button>
+                </center>
+              </div>
+            </div>
+
+          </form>
+        </center>
       </div>
     );
   }
 }
+
+// connects: mapStoreToProps is a global state in the props
+export default connect(null, userActions)(Login);
+
 

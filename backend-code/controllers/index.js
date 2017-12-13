@@ -9,6 +9,7 @@ router.use('/login', require('./login'))
 router.use('/post', require('./post'))
 router.use('/users', require('./user'))
 router.use('/sign-up', require('./sign-up'))
+router.use('/messages', require('./messages'))
 
 router.use('/', require('./home'));
 
