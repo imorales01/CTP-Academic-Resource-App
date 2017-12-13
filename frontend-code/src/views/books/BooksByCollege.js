@@ -302,7 +302,7 @@ export default class BooksByCollege extends Component {
           <div className="col-sm-2">
             <div className="card" style={{padding: '10px'}}>
               <div className="card-body border-success">
-                <h4 className="card-title border-success" style={{color:'blue', fontSize: '25px'}}>Find your Books By College</h4>
+                <h4 className="card-title border-success" style={{text: 'center', color:'#458B74', fontSize: '23px'}}>Find your Books By College</h4>
 
                 {
                   (this.state.colleges) ?
@@ -340,7 +340,7 @@ export default class BooksByCollege extends Component {
                   (this.state.collegeDepartments) ?
                   (
                     <div >
-                      <center><h4 className="card-title border-success" style={{color:'blue', fontSize: '25px'}}>Departments</h4></center>
+                      <center><h4 className="card-title border-success" style={{text: 'center', color:'#458B74', fontSize: '23px'}}>Departments</h4></center>
                       <div className="scrollable1">
                         {
                           this.state.collegeDepartments.Departments.map((department, key) => {
@@ -382,7 +382,7 @@ export default class BooksByCollege extends Component {
           <div className="col-sm-2">
             <div className="card" style={{padding: '10px'}}>
               <div className="card-body">
-                <center><h4 className="card-title" style={{color:'blue', fontSize: '25px'}}>List of courses in  {this.state.departmentCourses.departmentName}</h4></center>
+                <center><h4 className="card-title" style={{text: 'center', color:'#458B74', fontSize: '23px'}}>List of courses in  {this.state.departmentCourses.departmentName}</h4></center>
 
 
                   {
@@ -418,7 +418,7 @@ export default class BooksByCollege extends Component {
           <div className="col-sm-2">
             <div className="card" style={{padding: '10px'}}>
               <div className="card-body">
-                <h4 className="card-title" style={{color:'blue', fontSize: '25px'}}>Books for {this.state.booksByCourse.courseName}</h4>
+                <h4 className="card-title" style={{text: 'center', color:'#458B74', fontSize: '23px'}}>Books for {this.state.booksByCourse.courseName}</h4>
 
 
                   {
@@ -457,7 +457,7 @@ export default class BooksByCollege extends Component {
 
             <div>
               <div className="card-body">
-                <h4 className="card-title" style={{color:'blue', fontSize: '25px'}}> Book sellers for {this.state.selectedPostByTitle}</h4>
+                <h4 className="card-title" style={{text: 'center', color:'#458B74', fontSize: '25px'}}> Book sellers for {this.state.selectedPostByTitle}</h4>
                 {
                   (this.state.postsByTitle) ? 
                   
