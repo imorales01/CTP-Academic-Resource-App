@@ -12,6 +12,8 @@ import { Link } from 'react-router';
 import ContactSeller from '../ContactSeller';
 import ToggleDisplay from 'react-toggle-display';
 import Chat from '../Chat';
+import Payments from '../payments/Payments';
+import EmailConfirmation from '../email/EmailConfirmation'; 
 import '../../App.css';
 
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
@@ -38,6 +40,8 @@ export default class BooksByCollege extends Component {
         singlePostBookInfo:'',
         toggleContactSellerComponent:false,
         toggleBookDetailsComponent:false,
+        togglePaymentsComponent:false,
+        toggleEmailConfirmationComponent:false,
         showChat:false,
         chatDisplay: false,
         visibleDiv: false,
@@ -51,6 +55,8 @@ export default class BooksByCollege extends Component {
     this.contactUser = this.contactUser.bind(this)
     this.handleChatComponent = this.handleChatComponent.bind(this)
     this.handleVisibleDiv = this.handleVisibleDiv.bind(this)
+    this.buyNow = this.buyNow.bind(this)
+    this.updateEmailConfirmation = this.updateEmailConfirmation.bind(this)
 
   }
 
@@ -155,6 +161,8 @@ export default class BooksByCollege extends Component {
       this.setState({
         singlePostInfo: result,
         toggleContactSellerComponent:false,
+        togglePaymentsComponent:false,
+        toggleEmailConfirmationComponent:false,
         toggleBookDetailsComponent:true
       })
     })
@@ -187,7 +195,9 @@ export default class BooksByCollege extends Component {
     console.log('sellerId:', sellerId)
     this.setState({
       toggleContactSellerComponent: true,
-      toggleBookDetailsComponent:false
+      toggleBookDetailsComponent:false,
+      togglePaymentsComponent:false,
+      toggleEmailConfirmationComponent:false,
     })
     // this.setState({selectedPostByTitle: postTitle})
     // fetch('http://localhost:8000/api/post/' + postTitle , {
@@ -207,11 +217,28 @@ export default class BooksByCollege extends Component {
 
   buyNow(e) {
     let bookToBuy = e.target.value;
-    console.log('bookToBuy:',bookToBuy)
+    console.log('bookToBuy:')
+    this.setState({
+      togglePaymentsComponent: true,
+      toggleContactSellerComponent: false,
+      toggleEmailConfirmationComponent: false,
+      toggleBookDetailsComponent:false,
+    })
 
   }
 
 
+  updateEmailConfirmation(e) {
+    e.preventDefault()
+    console.log('toggleEmailConfirmationComponent: true,:')
+    this.setState({
+      toggleEmailConfirmationComponent: true,
+      togglePaymentsComponent: false,
+      toggleContactSellerComponent: false,
+      toggleBookDetailsComponent:false,
+    })
+
+  }
 
   //@componentWillMount: Fetches all colleges and renders them
   componentWillMount() {
@@ -265,6 +292,8 @@ export default class BooksByCollege extends Component {
  
 
   render() {
+    console.log('this.props now:', this.props)
+    console.log('this.state now:', this.state)
     return (
       <div className="container" style={{width: '100%',paddingBottom: '30px'}} >
         <div className="row ">
@@ -457,8 +486,7 @@ export default class BooksByCollege extends Component {
 
                               <td scope="row"><button onClick={this.getSinglePostInfo} value={book.id} className="btn-info">Details</button></td>
                               
-                              <td scope="row"><button  value={book.id} className="btn btn-success">Buy Now</button></td>
-                              <td scope="row"><button onClick={this.handleChatComponent} value={book.id} className="btn btn-success">Chat Now</button></td>
+                              <td scope="row"><button onClick={this.buyNow} value={book.id} className="btn btn-success">Buy Now</button></td>
                             </tr>) 
                           })
                         }
@@ -480,12 +508,32 @@ export default class BooksByCollege extends Component {
                 {/*CONTACT SELLER  IF toggleContactSellerComponent STATE EXIST DISPLAY IT*/}
                 {
                   (this.state.toggleContactSellerComponent) ?
-                  (<ContactSeller />) :
+                  (<ContactSeller  triggerEmail={this.updateEmailConfirmation}/>) :
+                  (null)
+                }
+
+  
+
+                {/*PAYMENTS SELLER  IF togglePaymentsComponent STATE EXIST DISPLAY IT*/}
+                {
+                  (this.state.togglePaymentsComponent) ?
+                  (<Payments />) :
+                  (null)
+                }
+
+                
+
+                
+                {/*EmailConfirmation  IF toggleEmailConfirmationComponent STATE EXIST DISPLAY IT*/}
+                {
+                  (this.state.toggleEmailConfirmationComponent) ?
+                  (<EmailConfirmation />) :
                   (null)
                 }
 
 
-                {/*BOOK DETAILS IF toggleBookDetailsComponent STATE EXIST DISPLAY IT*/}
+
+                {/*BUY BOOK IF toggleBookDetailsComponent STATE EXIST DISPLAY IT*/}
                 {
                   (this.state.toggleBookDetailsComponent) ?
                   (
@@ -525,8 +573,10 @@ export default class BooksByCollege extends Component {
                         <center>
                           <button onClick={this.contactUser} value={this.state.singlePostInfo.UserId} className="btn-info" style={{marginRight: '20px'}}>Contact Seller</button>
 
-                          <button type="submit" onClick={this.buyNow} className="btn-success" value={this.state.singlePostInfo.id}>Buy Now</button>
-                          </center>
+                          <button onClick={this.buyNow} value={this.state.singlePostInfo.id} className="btn btn-success">Buy Now</button>
+
+                        </center>
+
                       </div> 
 
                     </div>
@@ -568,9 +618,9 @@ export default class BooksByCollege extends Component {
 
         </div>
 
-        {/*SECOND ROW*/}
-        <div className="row ">
-          {/*Chat component*/}
+        {/*SECOND ROW  Chat component*/}
+       {/* <div className="row ">
+          
 
           <div className="col-sm-4 pull-right sticky">
             <p className="pull-right">
@@ -599,6 +649,7 @@ export default class BooksByCollege extends Component {
 
 
         </div>
+        */}
 
 
         {/* TRIYING TO MAKE IT BETTER

@@ -1,14 +1,26 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import * as userActions from './reducers/userActions.js';
-// import UploadImage from './UploadImage' I think we can 
+
 
 class Home extends Component {
   constructor(props){
     super(props);
     this.state={
       userInfo: ''
-    }   
+    }  
+    this.updateEmailConfirmation = this.updateEmailConfirmation.bind(this); 
+  }
+
+  updateEmailConfirmation(e) {
+    e.preventDefault()
+    console.log('toggleEmailConfirmationComponent: HOME ,:')
+    // this.setState({
+    //   toggleEmailConfirmationComponent: true,
+    //   togglePaymentsComponent: false,
+    //   toggleContactSellerComponent: false,
+    //   toggleBookDetailsComponent:false,
+    // })
   }
 
   render() {
@@ -20,6 +32,9 @@ class Home extends Component {
         <p>
           YOU ARE IN HOME SCREEN 
         </p>
+
+
+
 
     
 
