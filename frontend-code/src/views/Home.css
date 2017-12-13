@@ -1,0 +1,34 @@
+#ourpics{
+	align: left;
+	border-radius: 8px;
+	width: 150px;
+}
+
+#homeText{
+	font-size: 20px;
+	line-height: 1.5;
+}
+
+#Schools{
+	font-size: 20px;
+	line-height: 1.5;
+}
+
+#aboutUs{
+	font-size: 20px;
+	line-height: 1.5;
+	float:center;
+	text-align: center;
+}
+
+#Stack{
+	font-size: 20px;
+	line-height: 1.5;
+}
+
+#fullPage{
+	text-align: center;
+}
+h2{
+	font-weight: bold;
+}
