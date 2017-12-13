@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Link, browserHistory} from 'react-router'
 import {connect} from 'react-redux';
 import * as userActions from './reducers/userActions.js';
+import ourlogo from './ourLogo.png' // relative path to image 
 import SearchInNavBar from './SearchInNavBar'
 
 
@@ -31,7 +32,7 @@ import SearchInNavBar from './SearchInNavBar'
       <nav className="navbar main">
         <div className="logo col-xs-3">
           <a href="/" className="logoWidth">
-           <img  src="http://www.freeindex.co.uk/aspjpeg/showimage.asp?img=logo.jpg&folder=listingpics/692/506/&maxW=230&maxH=80" alt="logo"/>
+            <img src={ourlogo} alt={"ourlogo"} />
           </a>
         </div>
       </nav>
